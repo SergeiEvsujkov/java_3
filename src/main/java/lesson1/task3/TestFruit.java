@@ -5,6 +5,11 @@ public class TestFruit {
         Box <Orange> box1 = new Box();
         Box <Apple> box2 = new Box();
         Box <Orange> box3 = new Box();
+        Box <Fruit> box4 = new Box();
+
+        box4.add(new Orange());
+        box4.add(new Apple());
+        box4.display();
 
         box1.add(new Orange());
         box1.add(new Orange());
