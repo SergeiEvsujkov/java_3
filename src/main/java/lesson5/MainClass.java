@@ -27,7 +27,7 @@ public class MainClass {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        System.out.println();
         System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка началась!!!");
 
         try {
@@ -35,7 +35,7 @@ public class MainClass {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        System.out.println();
         System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка закончилась!!!");
     }
 }
