@@ -15,7 +15,7 @@ public class Class {
         System.out.println("Конец тестирования");
     }
 
-    @Test(priority = 1)
+    @Test
     private static void test1(){
         System.out.println("Тест-1");
     }
@@ -25,7 +25,7 @@ public class Class {
         System.out.println("Тест-2");
     }
 
-    @Test(priority = 3)
+    @Test(priority = 12)
     private static void test3(){
         System.out.println("Тест-3");
     }
