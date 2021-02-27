@@ -1,8 +1,8 @@
 package lesson7;
 
-public class Class {
+public class MyClass {
 
-    public Class() {
+    public MyClass() {
     }
 
     @BeforeSuite

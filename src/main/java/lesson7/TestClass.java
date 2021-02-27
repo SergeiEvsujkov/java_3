@@ -2,19 +2,21 @@ package lesson7;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.util.*;
 
 public class TestClass {
 
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
-        Class testClass = new Class();
-        start(testClass);
+
+        start(MyClass.class);
     }
 
-    public static void start(Class testClass) throws InvocationTargetException, IllegalAccessException {
-        Method[] methods = testClass.getClass().getDeclaredMethods();
+    public static void start(Class<MyClass> myClass) throws InvocationTargetException, IllegalAccessException {
+        Method[] methods = myClass.getDeclaredMethods();
         int countBeforeSuite = 0;
         int countAfterSuite = 0;
+        TreeSet <Integer> priorityIndex = new TreeSet<>();
+        priorityIndex.add(0);
 
         for (Method method : methods) {
 
@@ -22,22 +24,33 @@ public class TestClass {
                 method.setAccessible(true);
                 countBeforeSuite++;
                 if (countBeforeSuite == 1) {
-                    method.invoke(testClass);
+                    method.invoke(myClass);
                 } else {
                     throw new RuntimeException("Mетод с аннотацией BeforeSuite повторяется");
                 }
             }
         }
 
-        for (int i = 1; i < 11; i++) {
+        for (int i = 0; i < methods.length; i++){
+            if (methods[i].isAnnotationPresent(Test.class)) {
+
+                 priorityIndex.add(methods[i].getAnnotation(Test.class).priority());
+
+            }
+        }
+
+
+        while (priorityIndex.iterator().hasNext()) {
             for (Method method : methods) {
                 if (method.isAnnotationPresent(Test.class)) {
-                    if ((method.getAnnotation(Test.class).priority()) == i) {
+                    if ((method.getAnnotation(Test.class).priority()) == priorityIndex.first()) {
                         method.setAccessible(true);
-                        method.invoke(testClass);
+                        method.invoke(myClass);
+
                     }
                 }
             }
+            priorityIndex.remove(priorityIndex.first());
         }
 
         for (Method method : methods) {
@@ -45,7 +58,7 @@ public class TestClass {
                 method.setAccessible(true);
                 countAfterSuite++;
                 if (countAfterSuite == 1) {
-                    method.invoke(testClass);
+                    method.invoke(myClass);
                 } else {
                     throw new RuntimeException("Mетод с аннотацией AfterSuite повторяется");
                 }
